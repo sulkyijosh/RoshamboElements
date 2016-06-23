@@ -1,0 +1,35 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{512B52D3-CF2B-A724-CE50-344BB3935683}") = "Clash Poke", "Assembly-CSharp-firstpass.csproj", "{45B4D08E-0903-358E-9913-76DD311C6156}"
+EndProject
+Project("{512B52D3-CF2B-A724-CE50-344BB3935683}") = "Clash Poke", "Assembly-CSharp.csproj", "{F0DC6E72-B227-2F10-E65E-691A9DEC44FD}"
+EndProject
+Project("{512B52D3-CF2B-A724-CE50-344BB3935683}") = "Clash Poke", "Assembly-CSharp-Editor.csproj", "{3A0B727D-437D-4E3B-AEDA-D64E28DA3141}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{45B4D08E-0903-358E-9913-76DD311C6156}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45B4D08E-0903-358E-9913-76DD311C6156}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45B4D08E-0903-358E-9913-76DD311C6156}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45B4D08E-0903-358E-9913-76DD311C6156}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0DC6E72-B227-2F10-E65E-691A9DEC44FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0DC6E72-B227-2F10-E65E-691A9DEC44FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0DC6E72-B227-2F10-E65E-691A9DEC44FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0DC6E72-B227-2F10-E65E-691A9DEC44FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A0B727D-437D-4E3B-AEDA-D64E28DA3141}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A0B727D-437D-4E3B-AEDA-D64E28DA3141}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A0B727D-437D-4E3B-AEDA-D64E28DA3141}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A0B727D-437D-4E3B-AEDA-D64E28DA3141}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal
