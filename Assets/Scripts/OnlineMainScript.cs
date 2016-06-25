@@ -9,6 +9,16 @@ public class OnlineMainScript : PunBehaviour {
 	public GameObject p1Interface;
 	public GameObject p2Interface;
 
+	private bool pokehome1Dead = false;
+	private bool pokehome2Dead = false;
+
+	public static int p1HomeHp;
+	public static int p2HomeHp;
+	public int startHP = 3;
+
+	public GameObject winUI;
+	public GameObject loseUI;
+
 	public SpriteRenderer p1Beacon1;
 	public SpriteRenderer p1Beacon2;
 	public SpriteRenderer p1Beacon3;
@@ -19,8 +29,8 @@ public class OnlineMainScript : PunBehaviour {
 	private int p1BeaconSelected;
 	private int p2BeaconSelected;
 
-	GameObject pokeHome1;
-	GameObject pokeHome2;
+	public GameObject pokeHome1;
+	public GameObject pokeHome2;
 
 	public GameObject p1Red;
 	public GameObject p1Green;
@@ -36,7 +46,7 @@ public class OnlineMainScript : PunBehaviour {
 
 	bool isP1;
 
-	void Start () {
+	void Awake () {
 
 		if(!PhotonNetwork.isMasterClient)
 		{
@@ -46,11 +56,13 @@ public class OnlineMainScript : PunBehaviour {
 			mainCamera.transform.position = new Vector3(0f, 0.35f, -10f);
 			mainCamera.transform.rotation = Quaternion.Euler(0, 0, 180);
 			rotation = new Vector3(0, 0, 180);
+			p2Beacon2.GetComponent<SpriteRenderer>().color = Color.white;
 		}
 		else
 		{
-			PhotonNetwork.Instantiate("Pokehome1", new Vector3(0f, -3.6f, -3f), Quaternion.Euler(rotation), 0);
-			PhotonNetwork.Instantiate("Pokehome2", new Vector3(0f, 3.6f, -3f), Quaternion.Euler(rotation), 0);
+			p1Beacon2.GetComponent<SpriteRenderer>().color = Color.white;
+			pokeHome1 = PhotonNetwork.Instantiate("Pokehome1", new Vector3(0f, -3.6f, -3f), Quaternion.Euler(rotation), 0);
+			pokeHome2 = PhotonNetwork.Instantiate("Pokehome2", new Vector3(0f, 3.6f, -3f), Quaternion.Euler(rotation), 0);
 			mainCamera.transform.position = new Vector3(0f, -0.35f, -10f);
 			isP1 = true;
 		}
@@ -60,12 +72,22 @@ public class OnlineMainScript : PunBehaviour {
 		p1BeaconSelected = 2;
 		p2BeaconSelected = 2;
 
-		p1Beacon2.GetComponent<SpriteRenderer>().color = Color.black;
-		p2Beacon2.GetComponent<SpriteRenderer>().color = Color.black;
+		p1HomeHp = startHP;
+		p2HomeHp = startHP;
 	}
 
 	void Update () {
-
+		
+		if(p1HomeHp <= 0 && pokehome1Dead == false && pokehome2Dead == false)
+		{
+			pokehome1Dead = true;
+			showEndUI();
+		}
+		else if(p2HomeHp <= 0 && pokehome2Dead == false && pokehome1Dead == false)
+		{
+			pokehome2Dead = true;
+			showEndUI();
+		}
 	}
 
 	public void CharacterSelected(string button)
@@ -94,15 +116,15 @@ public class OnlineMainScript : PunBehaviour {
 		{
 			if(button == "Red1")
 			{
-				character = "P1_Fire";
+				character = "Online_P1_Fire";
 			}
 			else if(button == "Green1")
 			{
-				character = "P1_Earth";
+				character = "Online_P1_Earth";
 			}
 			else
 			{
-				character = "P1_Water";
+				character = "Online_P1_Water";
 			}
 
 			if(p1BeaconSelected == 1)
@@ -123,20 +145,20 @@ public class OnlineMainScript : PunBehaviour {
 		{
 			if(button == "Red2")
 			{
-				character = "P2_Fire";
+				character = "Online_P2_Fire";
 			}
 			else if(button == "Green2")
 			{
-				character = "P2_Earth";
+				character = "Online_P2_Earth";
 			}
 			else
 			{
-				character = "P2_Water";
+				character = "Online_P2_Water";
 			}
 
 			if(p2BeaconSelected == 1)
 			{
-				pos = new Vector3(-1.67f, 3.65f, -5f);
+				pos = new Vector3(1.67f, 3.65f, -5f);
 			}
 			else if(p2BeaconSelected == 2)
 			{
@@ -144,7 +166,7 @@ public class OnlineMainScript : PunBehaviour {
 			}
 			else
 			{
-				pos = new Vector3(1.67f, 3.65f, -5f);
+				pos = new Vector3(-1.67f, 3.65f, -5f);
 			}
 		}
 
@@ -174,46 +196,46 @@ public class OnlineMainScript : PunBehaviour {
 		if (beacon == "p1Beacon1")
 		{
 			p1BeaconSelected = 1;
-			p1Beacon2.GetComponent<SpriteRenderer>().color = Color.white;
-			p1Beacon3.GetComponent<SpriteRenderer>().color = Color.white;
-			p1Beacon1.GetComponent<SpriteRenderer>().color = Color.black;
+			p1Beacon2.GetComponent<SpriteRenderer>().color = Color.black;
+			p1Beacon3.GetComponent<SpriteRenderer>().color = Color.black;
+			p1Beacon1.GetComponent<SpriteRenderer>().color = Color.white;
 		}
 		else if (beacon == "p1Beacon2")
 		{
 			p1BeaconSelected = 2;
-			p1Beacon1.GetComponent<SpriteRenderer>().color = Color.white;
-			p1Beacon3.GetComponent<SpriteRenderer>().color = Color.white;
-			p1Beacon2.GetComponent<SpriteRenderer>().color = Color.black;
+			p1Beacon1.GetComponent<SpriteRenderer>().color = Color.black;
+			p1Beacon3.GetComponent<SpriteRenderer>().color = Color.black;
+			p1Beacon2.GetComponent<SpriteRenderer>().color = Color.white;
 		}
 		else if (beacon == "p1Beacon3")
 		{
 			p1BeaconSelected = 3;
-			p1Beacon1.GetComponent<SpriteRenderer>().color = Color.white;
-			p1Beacon2.GetComponent<SpriteRenderer>().color = Color.white;
-			p1Beacon3.GetComponent<SpriteRenderer>().color = Color.black;
+			p1Beacon1.GetComponent<SpriteRenderer>().color = Color.black;
+			p1Beacon2.GetComponent<SpriteRenderer>().color = Color.black;
+			p1Beacon3.GetComponent<SpriteRenderer>().color = Color.white;
 		}
 
 		else if (beacon == "p2Beacon1")
 		{
 			p2BeaconSelected = 1;
-			p2Beacon2.GetComponent<SpriteRenderer>().color = Color.white;
-			p2Beacon3.GetComponent<SpriteRenderer>().color = Color.white;
-			p2Beacon1.GetComponent<SpriteRenderer>().color = Color.black;
+			p2Beacon2.GetComponent<SpriteRenderer>().color = Color.black;
+			p2Beacon3.GetComponent<SpriteRenderer>().color = Color.black;
+			p2Beacon1.GetComponent<SpriteRenderer>().color = Color.white;
 		}
 		else if (beacon == "p2Beacon2")
 		{
 			p2BeaconSelected = 2;
-			p2Beacon1.GetComponent<SpriteRenderer>().color = Color.white;
-			p2Beacon3.GetComponent<SpriteRenderer>().color = Color.white;
-			p2Beacon2.GetComponent<SpriteRenderer>().color = Color.black;
+			p2Beacon1.GetComponent<SpriteRenderer>().color = Color.black;
+			p2Beacon3.GetComponent<SpriteRenderer>().color = Color.black;
+			p2Beacon2.GetComponent<SpriteRenderer>().color = Color.white;
 
 		}
 		else if (beacon == "p2Beacon3")
 		{
 			p2BeaconSelected = 3;
-			p2Beacon1.GetComponent<SpriteRenderer>().color = Color.white;
-			p2Beacon2.GetComponent<SpriteRenderer>().color = Color.white;
-			p2Beacon3.GetComponent<SpriteRenderer>().color = Color.black;
+			p2Beacon1.GetComponent<SpriteRenderer>().color = Color.black;
+			p2Beacon2.GetComponent<SpriteRenderer>().color = Color.black;
+			p2Beacon3.GetComponent<SpriteRenderer>().color = Color.white;
 		}
 	}
 
@@ -221,5 +243,53 @@ public class OnlineMainScript : PunBehaviour {
 	{
 		PhotonNetwork.LeaveRoom();
 		PhotonNetwork.LoadLevel("03A_Lobby");
+	}
+
+	void endScene(GameObject pokeHome)
+	{
+		GameObject thisParticle = PhotonNetwork.Instantiate("particleMulti", pokeHome.transform.position, Quaternion.identity, 0);
+		thisParticle.GetComponent<ParticleSystem>().Play();
+		Destroy(thisParticle, 2f);
+		PhotonNetwork.Destroy(pokeHome);
+	}
+
+	void showEndUI()
+	{
+		if(PhotonNetwork.isMasterClient)
+		{
+			if(pokehome2Dead)
+			{
+				winUI.SetActive(true);	
+				endScene(pokeHome2);
+			}
+			else
+			{
+				loseUI.SetActive(true);
+				endScene(pokeHome1);
+			}
+		}
+		else
+		{
+			if(pokehome2Dead)
+			{
+				loseUI.SetActive(true);
+				endScene(pokeHome1);
+			}
+			else
+			{
+				winUI.SetActive(true);
+				endScene(pokeHome2);
+			}
+		}
+	}
+
+	private IEnumerator GameOver()
+	{
+		yield return new WaitForSeconds(2f);
+
+		if(true)
+		{
+			showEndUI();
+		}
 	}
 }

@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MainScript : MonoBehaviour {
 
-	public Image p1Beacon1;
-	public Image p1Beacon2;
-	public Image p1Beacon3;
-	public Image p2Beacon1;
-	public Image p2Beacon2;
-	public Image p2Beacon3;
+	public SpriteRenderer p1Beacon1;
+	public SpriteRenderer p1Beacon2;
+	public SpriteRenderer p1Beacon3;
+	public SpriteRenderer p2Beacon1;
+	public SpriteRenderer p2Beacon2;
+	public SpriteRenderer p2Beacon3;
 
 	private bool p1SpawnAllowed;
 	private bool p2SpawnAllowed;
@@ -36,8 +37,8 @@ public class MainScript : MonoBehaviour {
 		p1BeaconSelected = 2;
 		p2BeaconSelected = 2;
 
-		p1Beacon2.GetComponent<Image>().color = Color.black;
-		p2Beacon2.GetComponent<Image>().color = Color.black;
+		p1Beacon2.GetComponent<SpriteRenderer>().color = Color.white;
+		p2Beacon2.GetComponent<SpriteRenderer>().color = Color.white;
 	}
 
 	void Update () {
@@ -67,9 +68,12 @@ public class MainScript : MonoBehaviour {
 	{
 		GameObject character;
 		Vector3 pos;
+		Vector3 rotation;
 
 		if(isP1)
 		{
+			rotation = new Vector3(0, 0, 0);
+
 			if(button == "Red1")
 			{
 				character = p1Red;
@@ -97,7 +101,9 @@ public class MainScript : MonoBehaviour {
 			}
 		}
 		else
-		{
+		{ 
+			rotation = new Vector3(0, 0, 180);
+
 			if(button == "Red2")
 			{
 				character = p2Red;
@@ -125,7 +131,7 @@ public class MainScript : MonoBehaviour {
 			}
 		}
 
-		Instantiate(character, pos, Quaternion.identity);
+		Instantiate(character, pos, Quaternion.Euler(rotation));
 	}
 
 	void allowSpawn(bool isP1) {
@@ -156,46 +162,51 @@ public class MainScript : MonoBehaviour {
 		if (beacon == "p1Beacon1")
 		{
 			p1BeaconSelected = 1;
-			p1Beacon2.GetComponent<Image>().color = Color.white;
-			p1Beacon3.GetComponent<Image>().color = Color.white;
-			p1Beacon1.GetComponent<Image>().color = Color.black;
+			p1Beacon2.GetComponent<SpriteRenderer>().color = Color.black;
+			p1Beacon3.GetComponent<SpriteRenderer>().color = Color.black;
+			p1Beacon1.GetComponent<SpriteRenderer>().color = Color.white;
 		}
 		else if (beacon == "p1Beacon2")
 		{
 			p1BeaconSelected = 2;
-			p1Beacon1.GetComponent<Image>().color = Color.white;
-			p1Beacon3.GetComponent<Image>().color = Color.white;
-			p1Beacon2.GetComponent<Image>().color = Color.black;
+			p1Beacon1.GetComponent<SpriteRenderer>().color = Color.black;
+			p1Beacon3.GetComponent<SpriteRenderer>().color = Color.black;
+			p1Beacon2.GetComponent<SpriteRenderer>().color = Color.white;
 		}
 		else if (beacon == "p1Beacon3")
 		{
 			p1BeaconSelected = 3;
-			p1Beacon1.GetComponent<Image>().color = Color.white;
-			p1Beacon2.GetComponent<Image>().color = Color.white;
-			p1Beacon3.GetComponent<Image>().color = Color.black;
+			p1Beacon1.GetComponent<SpriteRenderer>().color = Color.black;
+			p1Beacon2.GetComponent<SpriteRenderer>().color = Color.black;
+			p1Beacon3.GetComponent<SpriteRenderer>().color = Color.white;
 		}
 
 		else if (beacon == "p2Beacon1")
 		{
 			p2BeaconSelected = 1;
-			p2Beacon2.GetComponent<Image>().color = Color.white;
-			p2Beacon3.GetComponent<Image>().color = Color.white;
-			p2Beacon1.GetComponent<Image>().color = Color.black;
+			p2Beacon2.GetComponent<SpriteRenderer>().color = Color.black;
+			p2Beacon3.GetComponent<SpriteRenderer>().color = Color.black;
+			p2Beacon1.GetComponent<SpriteRenderer>().color = Color.white;
 		}
 		else if (beacon == "p2Beacon2")
 		{
 			p2BeaconSelected = 2;
-			p2Beacon1.GetComponent<Image>().color = Color.white;
-			p2Beacon3.GetComponent<Image>().color = Color.white;
-			p2Beacon2.GetComponent<Image>().color = Color.black;
+			p2Beacon1.GetComponent<SpriteRenderer>().color = Color.black;
+			p2Beacon3.GetComponent<SpriteRenderer>().color = Color.black;
+			p2Beacon2.GetComponent<SpriteRenderer>().color = Color.white;
 
 		}
 		else if (beacon == "p2Beacon3")
 		{
 			p2BeaconSelected = 3;
-			p2Beacon1.GetComponent<Image>().color = Color.white;
-			p2Beacon2.GetComponent<Image>().color = Color.white;
-			p2Beacon3.GetComponent<Image>().color = Color.black;
+			p2Beacon1.GetComponent<SpriteRenderer>().color = Color.black;
+			p2Beacon2.GetComponent<SpriteRenderer>().color = Color.black;
+			p2Beacon3.GetComponent<SpriteRenderer>().color = Color.white;
 		}
+	}
+
+	public void endGame()
+	{
+		SceneManager.LoadScene("01_MainMenu");
 	}
 }

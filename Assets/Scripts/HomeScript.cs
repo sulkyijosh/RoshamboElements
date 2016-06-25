@@ -6,43 +6,39 @@ public class HomeScript: MonoBehaviour {
 	public static int p1HomeHp;
 	public static int p2HomeHp;
 	public ParticleSystem multiParticle;
+	public GameObject endNotice;
+	public GameObject home1;
+	public GameObject home2;
 
-	// Use this for initialization
 	void Start () {
 		p1HomeHp = 3;
 		p2HomeHp = 3;
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
-		if(this.name == "P1_Pokehome" && p1HomeHp <= 0)
+		if(home1 != null && home2 != null)
 		{
-			ParticleSystem thisParticle = Instantiate(multiParticle, this.gameObject.transform.position, Quaternion.identity) as ParticleSystem;
-			thisParticle.Play();
-			Destroy(this.gameObject);
-			endScene();
-		}
-		else if(this.name == "P2_Pokehome" && p2HomeHp <= 0)
-		{
-			ParticleSystem thisParticle = Instantiate(multiParticle, this.gameObject.transform.position, Quaternion.identity) as ParticleSystem;
-			thisParticle.Play();
-			Destroy(this.gameObject);
-			endScene();
+			if(p1HomeHp <= 0)
+			{
+				endScene(home1, true);
+			}
+			else if(p2HomeHp <= 0)
+			{
+				endScene(home2, false);
+			}
 		}
 	}
 
-	void endScene()
+	void endScene(GameObject home, bool p1Wins)
 	{
-		StartCoroutine(GameOver());
-	}
+		ParticleSystem thisParticle = Instantiate(multiParticle, home.transform.position, Quaternion.identity) as ParticleSystem;
+		thisParticle.Play();
+		Destroy(home.gameObject);
 
-	private IEnumerator GameOver()
-	{
-		yield return new WaitForSeconds(1f);
-
-		if(true)
+		if(!p1Wins)
 		{
-			
+			endNotice.transform.Rotate(new Vector3(0, 0, 180));
 		}
+		endNotice.SetActive(true);
 	}
 }

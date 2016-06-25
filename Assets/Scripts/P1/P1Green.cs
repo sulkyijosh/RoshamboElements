@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class P1Green : OnlineCharacterScript {
+public class P1Green : CharacterScript {
 
 	bool beaconTouch = false;
 
@@ -11,7 +11,7 @@ public class P1Green : OnlineCharacterScript {
 
 	void Start()
 	{
-		home = GameObject.Find("Pokehome2(Clone)").gameObject;
+		home = GameObject.Find("Pokehome2").gameObject;
 	}
 
 	void FixedUpdate ()
@@ -28,6 +28,7 @@ public class P1Green : OnlineCharacterScript {
 		if(col.tag == "Beacon2")
 		{
 			attackBase();
+			turnTowardsTower(col);
 		}
 		else
 		{

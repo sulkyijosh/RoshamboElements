@@ -6,26 +6,21 @@ using UnityEngine.UI;
 
 public class LobbyScript : PunBehaviour {
 
-	public GameObject waitingImage;
+	public GameObject waitingScreen;
+	public GameObject loadingScreen;
 
 	// Use this for initialization
 	void Awake ()
 	{
-		PhotonNetwork.ConnectUsingSettings("1.0");
+		if(PhotonNetwork.connectionState == ConnectionState.Disconnected)
+		{
+			PhotonNetwork.ConnectUsingSettings("1.0");
+		}
 	}
 
-//	void OnJoinedLobby()
-//	{
-//		if(PhotonNetwork.room != null)
-//		{
-//			PhotonNetwork.LeaveRoom();
-//		}
-//	}
-
-	// Update is called once per frame
-	void OnGUI ()
+	public override void OnJoinedLobby()
 	{
-		GUILayout.Label(PhotonNetwork.connectionStateDetailed.ToString());
+		loadingScreen.SetActive(false);
 	}
 
 	void OnPhotonRandomJoinFailed()
@@ -42,7 +37,7 @@ public class LobbyScript : PunBehaviour {
 		}
 		else
 		{
-			waitingImage.SetActive(true);
+			waitingScreen.SetActive(true);
 		}
 	}
 
@@ -50,7 +45,7 @@ public class LobbyScript : PunBehaviour {
 	{
 		if(PhotonNetwork.playerList.Length == 2)
 		{
-			waitingImage.SetActive(false);
+			waitingScreen.SetActive(false);
 			PhotonNetwork.LoadLevel("03B_OnlinePlay");
 		}
 	}
@@ -58,5 +53,11 @@ public class LobbyScript : PunBehaviour {
 	public void JoinRoom()
 	{
 		PhotonNetwork.JoinRandomRoom();
+	}
+
+	public void cancelWait()
+	{
+		waitingScreen.SetActive(false);
+		PhotonNetwork.LeaveRoom();
 	}
 }

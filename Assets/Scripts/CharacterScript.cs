@@ -79,6 +79,8 @@ public class CharacterScript : MonoBehaviour {
 			{
 				HomeScript.p1HomeHp -= 1;
 			}
+			Debug.Log(HomeScript.p1HomeHp);
+			Debug.Log(HomeScript.p2HomeHp);
 			attackEffect(particle, home);
 			StartCoroutine(prepareAttack(isP1, character, home, particle));
 		}
@@ -89,6 +91,18 @@ public class CharacterScript : MonoBehaviour {
 		ParticleSystem thisParticle = Instantiate(particle, home.transform.position, Quaternion.identity) as ParticleSystem;
 		thisParticle.Play();
 		Destroy(thisParticle.gameObject, 1f);
+	}
+
+	public void turnTowardsTower(Collider col)
+	{
+		if(col.gameObject.name == "Beacon1")
+		{
+			this.gameObject.transform.Rotate(new Vector3(0, 0, 90));
+		}
+		else if(col.gameObject.name == "Beacon3")
+		{
+			this.gameObject.transform.Rotate(new Vector3(0, 0, -90));
+		}
 	}
 
 	private IEnumerator prepareAttack(bool isP1, GameObject character, GameObject home, ParticleSystem particle){

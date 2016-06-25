@@ -109,11 +109,11 @@ public class OnlineCharacterScript : MonoBehaviour {
 		{
 			if (isP1)
 			{
-				OnlineHomeScript.p2HomeHp -= 1;
+				OnlineMainScript.p2HomeHp -= 1;
 			}
 			else
 			{
-				OnlineHomeScript.p1HomeHp -= 1;
+				OnlineMainScript.p1HomeHp -= 1;
 			}
 			attackEffect(particle, home);
 			StartCoroutine(prepareAttack(isP1, character, home, particle));
@@ -125,6 +125,18 @@ public class OnlineCharacterScript : MonoBehaviour {
 		ParticleSystem thisParticle = Instantiate(particle, location.transform.position, Quaternion.identity) as ParticleSystem;
 		thisParticle.Play();
 		Destroy(thisParticle.gameObject, 1f);
+	}
+
+	public void turnTowardsTower(Collider col)
+	{
+		if(col.gameObject.name == "Beacon1")
+		{
+			this.gameObject.transform.Rotate(new Vector3(0, 0, 90));
+		}
+		else if(col.gameObject.name == "Beacon3")
+		{
+			this.gameObject.transform.Rotate(new Vector3(0, 0, -90));
+		}
 	}
 
 	private IEnumerator prepareAttack(bool isP1, GameObject character, GameObject home, ParticleSystem particle){
