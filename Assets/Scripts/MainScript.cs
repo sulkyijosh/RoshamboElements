@@ -37,8 +37,10 @@ public class MainScript : MonoBehaviour {
 		p1BeaconSelected = 2;
 		p2BeaconSelected = 2;
 
-		p1Beacon2.GetComponent<SpriteRenderer>().color = Color.white;
-		p2Beacon2.GetComponent<SpriteRenderer>().color = Color.white;
+		p1Beacon1.GetComponent<SpriteRenderer>().color = Color.black;
+		p2Beacon1.GetComponent<SpriteRenderer>().color = Color.black;
+		p1Beacon3.GetComponent<SpriteRenderer>().color = Color.black;
+		p2Beacon3.GetComponent<SpriteRenderer>().color = Color.black;
 	}
 
 	void Update () {

@@ -120,6 +120,7 @@
      <Compile Include="Assets\Scripts\HomeScript.cs" />
      <Compile Include="Assets\Scripts\LobbyScript.cs" />
      <Compile Include="Assets\Scripts\MainScript.cs" />
+     <Compile Include="Assets\Scripts\OnlineAIMainScript.cs" />
      <Compile Include="Assets\Scripts\OnlineCharacterScript.cs" />
      <Compile Include="Assets\Scripts\OnlineMainScript.cs" />
      <Compile Include="Assets\Scripts\P1\OnlineP1Blue.cs" />

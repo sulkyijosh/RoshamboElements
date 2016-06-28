@@ -29,8 +29,8 @@ public class OnlineMainScript : PunBehaviour {
 	private int p1BeaconSelected;
 	private int p2BeaconSelected;
 
-	public GameObject pokeHome1;
-	public GameObject pokeHome2;
+	GameObject pokeHome1;
+	GameObject pokeHome2;
 
 	public GameObject p1Red;
 	public GameObject p1Green;
@@ -56,11 +56,13 @@ public class OnlineMainScript : PunBehaviour {
 			mainCamera.transform.position = new Vector3(0f, 0.35f, -10f);
 			mainCamera.transform.rotation = Quaternion.Euler(0, 0, 180);
 			rotation = new Vector3(0, 0, 180);
-			p2Beacon2.GetComponent<SpriteRenderer>().color = Color.white;
+			p2Beacon1.GetComponent<SpriteRenderer>().color = Color.black;
+			p2Beacon3.GetComponent<SpriteRenderer>().color = Color.black;
 		}
 		else
 		{
-			p1Beacon2.GetComponent<SpriteRenderer>().color = Color.white;
+			p1Beacon1.GetComponent<SpriteRenderer>().color = Color.black;
+			p1Beacon3.GetComponent<SpriteRenderer>().color = Color.black;
 			pokeHome1 = PhotonNetwork.Instantiate("Pokehome1", new Vector3(0f, -3.6f, -3f), Quaternion.Euler(rotation), 0);
 			pokeHome2 = PhotonNetwork.Instantiate("Pokehome2", new Vector3(0f, 3.6f, -3f), Quaternion.Euler(rotation), 0);
 			mainCamera.transform.position = new Vector3(0f, -0.35f, -10f);

@@ -3,11 +3,16 @@ using System.Collections;
 using Photon;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Threading;
 
 public class LobbyScript : PunBehaviour {
 
 	public GameObject waitingScreen;
 	public GameObject loadingScreen;
+
+	bool opponentNotFound = true;
+
+	Thread AIMatching;// = new Thread(AIMatchingRef);
 
 	// Use this for initialization
 	void Awake ()
@@ -30,14 +35,14 @@ public class LobbyScript : PunBehaviour {
 
 	public override void OnJoinedRoom()
 	{
-		
 		if(PhotonNetwork.playerList.Length == 2)
 		{
 			PhotonNetwork.LoadLevel("03B_OnlinePlay");
 		}
 		else
 		{
-			waitingScreen.SetActive(true);
+			opponentNotFound = true;
+			StartCoroutine(MatchAIOpponent());
 		}
 	}
 
@@ -45,7 +50,7 @@ public class LobbyScript : PunBehaviour {
 	{
 		if(PhotonNetwork.playerList.Length == 2)
 		{
-			waitingScreen.SetActive(false);
+			stopAIMatch();
 			PhotonNetwork.LoadLevel("03B_OnlinePlay");
 		}
 	}
@@ -53,11 +58,44 @@ public class LobbyScript : PunBehaviour {
 	public void JoinRoom()
 	{
 		PhotonNetwork.JoinRandomRoom();
+		waitingScreen.SetActive(true);
 	}
 
 	public void cancelWait()
 	{
 		waitingScreen.SetActive(false);
+		stopAIMatch();
 		PhotonNetwork.LeaveRoom();
 	}
+
+	private IEnumerator MatchAIOpponent()
+	{
+		yield return new WaitForSeconds(10f);
+
+		if(opponentNotFound)
+		{
+			PhotonNetwork.LoadLevel("03C_AIPlay");
+		}
+	}
+
+	public void stopAIMatch()
+	{
+		opponentNotFound = false;
+		StopCoroutine(MatchAIOpponent());
+	}
+
+//	public static void MatchAIOpponent()
+//	{
+//		ThreadStart AIMatchingRef = new ThreadStart(MatchAIOpponent);
+//		AIMatching = new Thread(AIMatchingRef);
+//		int waitTime = 3000;
+//
+//		Thread.Sleep(waitTime);
+//		
+//	}
+//
+//	void AIMatch()
+//	{
+//		PhotonNetwork.LoadLevel("02_Offline");
+//	}
 }

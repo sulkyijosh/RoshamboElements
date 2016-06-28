@@ -20,11 +20,11 @@ public class HomeScript: MonoBehaviour {
 		{
 			if(p1HomeHp <= 0)
 			{
-				endScene(home1, true);
+				endScene(home1, false);
 			}
 			else if(p2HomeHp <= 0)
 			{
-				endScene(home2, false);
+				endScene(home2, true);
 			}
 		}
 	}
@@ -35,10 +35,11 @@ public class HomeScript: MonoBehaviour {
 		thisParticle.Play();
 		Destroy(home.gameObject);
 
+		endNotice.SetActive(true);
+
 		if(!p1Wins)
 		{
-			endNotice.transform.Rotate(new Vector3(0, 0, 180));
+			endNotice.transform.rotation = Quaternion.Euler(0, 0, 180);
 		}
-		endNotice.SetActive(true);
 	}
 }

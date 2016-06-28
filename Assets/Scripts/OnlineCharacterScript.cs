@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class OnlineCharacterScript : MonoBehaviour {
 
@@ -102,18 +103,31 @@ public class OnlineCharacterScript : MonoBehaviour {
 		Destroy(opponent.gameObject);
 	}
 
-
 	public void attackHome(bool isP1, GameObject character, GameObject home, ParticleSystem particle){
 
 		if(character != null && home != null)
 		{
 			if (isP1)
 			{
-				OnlineMainScript.p2HomeHp -= 1;
+				if(SceneManager.GetActiveScene().name == "03B_OnlinePlay")
+				{
+					OnlineMainScript.p2HomeHp -= 1;
+				}
+				else
+				{
+					OnlineAIMainScript.p2HomeHp -= 1;
+				}
 			}
 			else
 			{
-				OnlineMainScript.p1HomeHp -= 1;
+				if(SceneManager.GetActiveScene().name == "03B_OnlinePlay")
+				{
+					OnlineMainScript.p1HomeHp -= 1;
+				}
+				else
+				{
+					OnlineAIMainScript.p1HomeHp -= 1;
+				}
 			}
 			attackEffect(particle, home);
 			StartCoroutine(prepareAttack(isP1, character, home, particle));
